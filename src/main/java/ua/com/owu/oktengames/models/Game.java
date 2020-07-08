@@ -1,5 +1,6 @@
 package ua.com.owu.oktengames.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import ua.com.owu.oktengames.enums.Platform;
 
@@ -32,5 +33,9 @@ public class Game {
     private List<String> genres = new ArrayList<>();
     @ElementCollection
     private List<Platform> platforms = new ArrayList<>(); // TODO: create OneToMany relation with devices or just put Platform enum value
-//    private List<Game> additionalContent = new ArrayList<>();
+    @OneToMany(mappedBy = "mainGame", fetch = FetchType.LAZY)
+    private List<Game> additionalContent = new ArrayList<>();
+    @ManyToOne
+    @JsonIgnore
+    private Game mainGame;
 }

@@ -16,7 +16,7 @@ public class GameService implements IGameService {
 
     private GameRepo gameRepo;
 
-    public void addGame(Game game){
+    public void saveGame(Game game){
         gameRepo.save(game);
     }
 
