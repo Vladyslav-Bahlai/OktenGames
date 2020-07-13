@@ -34,6 +34,7 @@ public class GameController {
 
     /**
      * Adds DLC games by dlcIds to main game by gameId and updates database
+     * dlcIds must be a string of numbers separated by _ symbol
      *
      * @param dlcIds String of DLC games IDs separated by _ symbol
      * @param gameId ID of a game to which DLCs are being added

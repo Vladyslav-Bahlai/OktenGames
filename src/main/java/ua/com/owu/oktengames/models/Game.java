@@ -25,17 +25,19 @@ public class Game {
     private double score;
     private String imgUrl;
     private String description;
-    private String releaseDate; // TODO: probably replace String type with some special Date or Time Java classes
+    // TODO: probably replace String type with some special Date or Time Java classes
+    private String releaseDate;
     private String company;
     @ElementCollection
     private List<String> screenShotsImgUrl = new ArrayList<>();
     @ElementCollection
     private List<String> genres = new ArrayList<>();
     @ElementCollection
-    private List<Platform> platforms = new ArrayList<>(); // TODO: create OneToMany relation with devices or just put Platform enum value
+    // TODO: create OneToMany relation with devices or just put Platform enum value
+    private List<Platform> platforms = new ArrayList<>();
     @OneToMany(mappedBy = "mainGame", fetch = FetchType.LAZY)
     private List<Game> additionalContent = new ArrayList<>();
     @ManyToOne
     @JsonIgnore
-    private Game mainGame;
+    private Game mainGame; // if our game is not DLC, this field must be null
 }
