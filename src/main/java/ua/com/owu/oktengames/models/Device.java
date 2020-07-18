@@ -1,5 +1,6 @@
 package ua.com.owu.oktengames.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import ua.com.owu.oktengames.enums.Color;
 import ua.com.owu.oktengames.enums.ConditionState;
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
+@ToString(exclude = {"extraGames", "gamepads"})
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +35,10 @@ public class Device {
     private ConditionState conditionState;
     @ElementCollection
     private List<String> photosImgUrl = new ArrayList<>();
-//    private List<Game> extraGames;
-//    private List<Gamepad> gamepads;
+    @JsonIgnore
+    @OneToMany(mappedBy = "device", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Game> extraGames = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "device", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Gamepad> gamepads = new ArrayList<>();
 }

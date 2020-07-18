@@ -40,4 +40,6 @@ public class Game {
     @ManyToOne
     @JsonIgnore
     private Game mainGame; // if our game is not DLC, this field must be null
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Device device;
 }

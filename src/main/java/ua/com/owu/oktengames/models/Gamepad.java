@@ -4,10 +4,7 @@ import lombok.*;
 import ua.com.owu.oktengames.enums.Color;
 import ua.com.owu.oktengames.enums.Platform;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -25,4 +22,6 @@ public class Gamepad {
     private int amount;
     private Color color;
     private Platform platform;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Device device;
 }
