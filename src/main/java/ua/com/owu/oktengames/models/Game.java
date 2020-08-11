@@ -1,6 +1,8 @@
 package ua.com.owu.oktengames.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import ua.com.owu.oktengames.enums.Platform;
 
@@ -36,9 +38,10 @@ public class Game {
     // TODO: create OneToMany relation with devices or just put Platform enum value
     private List<Platform> platforms = new ArrayList<>();
     @OneToMany(mappedBy = "mainGame", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Game> additionalContent = new ArrayList<>();
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference
     private Game mainGame; // if our game is not DLC, this field must be null
     @ManyToOne(fetch = FetchType.LAZY)
     private Device device;

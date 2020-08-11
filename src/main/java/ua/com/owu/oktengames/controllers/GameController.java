@@ -5,29 +5,30 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.owu.oktengames.models.Game;
 import ua.com.owu.oktengames.servicesImpl.GameService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = {"http://localhost:4200"})
+@RequestMapping("/games")
 public class GameController {
 
     private GameService gameService;
 
-    @PostMapping("/add-game")
+    @PostMapping("/add")
     public void addGame(@RequestBody Game game){
         System.out.println(game.toString());
         gameService.saveGame(game);
     }
 
-    @GetMapping("/all-games")
+    @GetMapping("/all")
     public List<Game> getAllGames(){
         return gameService.getAllGames();
     }
 
-    @GetMapping("/get-game/{id}")
+    @GetMapping("/get/{id}")
     public Game getGameById(@PathVariable int id){
         return gameService.getGameById(id);
     }
@@ -39,7 +40,7 @@ public class GameController {
      * @param dlcIds String of DLC games IDs separated by _ symbol
      * @param gameId ID of a game to which DLCs are being added
      */
-    @GetMapping("/add-dlc/{dlcIds}/to-game/{gameId}")
+    @GetMapping("/add/{dlcIds}/to/{gameId}")
     public void addAdditionalContent(
             @PathVariable String dlcIds,
             @PathVariable int gameId)
