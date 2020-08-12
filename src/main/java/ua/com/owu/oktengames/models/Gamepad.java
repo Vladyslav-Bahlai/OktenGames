@@ -2,7 +2,6 @@ package ua.com.owu.oktengames.models;
 
 import lombok.*;
 import ua.com.owu.oktengames.enums.Color;
-import ua.com.owu.oktengames.enums.Platform;
 
 import javax.persistence.*;
 
@@ -21,7 +20,7 @@ public class Gamepad {
     private double price;
     private int amount;
     private Color color;
-    private Platform platform;
+//    private Platform platform;
     @ManyToOne(fetch = FetchType.LAZY)
     private Device device;
 }

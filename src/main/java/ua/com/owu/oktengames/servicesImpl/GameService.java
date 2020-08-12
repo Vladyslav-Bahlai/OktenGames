@@ -1,7 +1,6 @@
 package ua.com.owu.oktengames.servicesImpl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.owu.oktengames.models.Game;
 import ua.com.owu.oktengames.repo.GameRepo;
@@ -37,9 +36,9 @@ public class GameService implements IGameService {
      * @return true if operation was successful, otherwise false.
      */
     public boolean deleteGameById(int id){
-        Optional<Game> gameOptional = gameRepo.findById(id);
-        if (!gameOptional.isPresent()) return false;
-        gameRepo.delete(gameOptional.get());
+        Game game = getGameById(id);
+        if (game == null) return false;
+        gameRepo.delete(game);
         return true;
     }
 }

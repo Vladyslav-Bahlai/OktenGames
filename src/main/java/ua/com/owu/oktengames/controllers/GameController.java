@@ -3,6 +3,8 @@ package ua.com.owu.oktengames.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.com.owu.oktengames.models.Game;
+import ua.com.owu.oktengames.models.GameAddon;
+import ua.com.owu.oktengames.servicesImpl.GameAddonService;
 import ua.com.owu.oktengames.servicesImpl.GameService;
 
 import java.util.Arrays;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class GameController {
 
     private GameService gameService;
+    private GameAddonService gameAddonService;
 
     @PostMapping("/add")
     public void addGame(@RequestBody Game game){
@@ -48,17 +51,17 @@ public class GameController {
         // game object to which DLCs are being added
         Game mainGame = gameService.getGameById(gameId);
         // to parse string of DLC IDs into String array
-        String[] dlcIdsStringArr = dlcIds.split("_");
+        String[] addonIdsStringArr = dlcIds.split("_");
         // to convert our array of String IDs into List of Integer IDs
-        List<Integer> dlcIdsArray = Arrays.stream(dlcIdsStringArr)
+        List<Integer> dlcIdsArray = Arrays.stream(addonIdsStringArr)
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
         // finds game object in database for each DLC Id and adds it to main game list of DLCs
         dlcIdsArray.forEach(id -> {
-            Game dlcGame = gameService.getGameById(id);
-            mainGame.getAdditionalContent().add(dlcGame);
-            dlcGame.setMainGame(mainGame);
-            gameService.saveGame(dlcGame);
+            GameAddon gameAddon = gameAddonService.getGameAddonById(id);
+            mainGame.getAdditionalContent().add(gameAddon);
+            gameAddon.setMainGame(mainGame);
+            gameAddonService.saveGameAddon(gameAddon);
         });
         gameService.saveGame(mainGame);
     }

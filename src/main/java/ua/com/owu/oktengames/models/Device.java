@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import ua.com.owu.oktengames.enums.Color;
 import ua.com.owu.oktengames.enums.ConditionState;
-import ua.com.owu.oktengames.enums.Platform;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,8 +25,8 @@ public class Device {
     private double price;
     private int amount;
 
-    @Enumerated(value = EnumType.STRING)
-    private Platform platform;
+//    @Enumerated(value = EnumType.STRING)
+//    private Platform platform;
     private String capacity;
     @Enumerated(value = EnumType.STRING)
     private Color color;
