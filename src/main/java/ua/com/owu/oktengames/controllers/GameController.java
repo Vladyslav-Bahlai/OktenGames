@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.com.owu.oktengames.models.Game;
 import ua.com.owu.oktengames.models.GameAddon;
+import ua.com.owu.oktengames.models.Platform;
 import ua.com.owu.oktengames.servicesImpl.GameAddonService;
 import ua.com.owu.oktengames.servicesImpl.GameService;
+import ua.com.owu.oktengames.servicesImpl.PlatformService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +21,17 @@ public class GameController {
 
     private GameService gameService;
     private GameAddonService gameAddonService;
+    private PlatformService platformService;
 
     @PostMapping("/add")
-    public void addGame(@RequestBody Game game){
+    public Game addGame(@RequestBody Game game){
         System.out.println(game.toString());
         gameService.saveGame(game);
+        for (Platform platform : game.getPlatforms()) {
+            platform.getGames().add(game);
+            platformService.addPlatform(platform);
+        }
+        return game;
     }
 
     @GetMapping("/all")
@@ -61,7 +69,6 @@ public class GameController {
             GameAddon gameAddon = gameAddonService.getGameAddonById(id);
             mainGame.getAdditionalContent().add(gameAddon);
             gameAddon.setMainGame(mainGame);
-            gameAddonService.saveGameAddon(gameAddon);
         });
         gameService.saveGame(mainGame);
     }

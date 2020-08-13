@@ -3,8 +3,7 @@ package ua.com.owu.oktengames.models;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -16,7 +15,7 @@ import java.util.List;
 @ToString
 public class Game {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
     private String title;
     private int amount;
@@ -31,8 +30,8 @@ public class Game {
     private List<String> screenShotsImgUrl = new ArrayList<>();
     @ElementCollection
     private List<String> genres = new ArrayList<>();
-//    @OneToMany()
-//    private List<Platform> platforms = new ArrayList<>();
+    @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
+    private List<Platform> platforms = new LinkedList<>();
     @OneToMany(mappedBy = "mainGame", cascade = CascadeType.ALL)
     private List<GameAddon> additionalContent = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
