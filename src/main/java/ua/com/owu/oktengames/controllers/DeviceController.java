@@ -21,10 +21,10 @@ public class DeviceController {
     public void addDevice(@RequestBody Device device){
         System.out.println(device.toString());
         deviceService.addDevice(device);
-        device.getExtraGames().forEach(game -> {
-            game.setDevice(device);
-            gameService.saveGame(game);
-        });
+//        device.getExtraGames().forEach(game -> {
+//            game.setDevice(device);
+//            gameService.saveGame(game);
+//        });
         device.getGamepads().forEach(gamepad -> {
             gamepad.setDevice(device);
             gamepadService.addGamepad(gamepad);
