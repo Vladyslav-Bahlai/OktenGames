@@ -1,14 +1,12 @@
 package ua.com.owu.oktengames.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import ua.com.owu.oktengames.enums.Platform;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -17,7 +15,7 @@ import java.util.List;
 @ToString
 public class Game {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
     private String title;
     private int amount;
@@ -32,14 +30,10 @@ public class Game {
     private List<String> screenShotsImgUrl = new ArrayList<>();
     @ElementCollection
     private List<String> genres = new ArrayList<>();
-    @ElementCollection
-    // TODO: create OneToMany relation with devices or just put Platform enum value
-    private List<Platform> platforms = new ArrayList<>();
-    @OneToMany(mappedBy = "mainGame", fetch = FetchType.LAZY)
-    private List<Game> additionalContent = new ArrayList<>();
-    @ManyToOne
-    @JsonIgnore
-    private Game mainGame; // if our game is not DLC, this field must be null
+    @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
+    private List<Platform> platforms = new LinkedList<>();
+    @OneToMany(mappedBy = "mainGame", cascade = CascadeType.ALL)
+    private List<GameAddon> additionalContent = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     private Device device;
 }
