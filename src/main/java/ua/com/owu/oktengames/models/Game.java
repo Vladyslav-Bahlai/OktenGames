@@ -34,6 +34,6 @@ public class Game {
     private List<Platform> platforms = new LinkedList<>();
     @OneToMany(mappedBy = "mainGame", cascade = CascadeType.ALL)
     private List<GameAddon> additionalContent = new ArrayList<>();
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Device device;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Device device;
 }

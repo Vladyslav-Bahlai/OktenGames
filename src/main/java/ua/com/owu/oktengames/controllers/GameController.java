@@ -54,8 +54,8 @@ public class GameController {
     @GetMapping("/add/{dlcIds}/to/{gameId}")
     public void addAdditionalContent(
             @PathVariable String dlcIds,
-            @PathVariable int gameId)
-    {
+            @PathVariable int gameId
+    ) {
         // game object to which DLCs are being added
         Game mainGame = gameService.getGameById(gameId);
         // to parse string of DLC IDs into String array
@@ -71,6 +71,11 @@ public class GameController {
             gameAddon.setMainGame(mainGame);
         });
         gameService.saveGame(mainGame);
+    }
+
+    @GetMapping("/platforms")
+    public List<Platform> getAllPlatforms() {
+        return platformService.getAllPlatforms();
     }
 
 }

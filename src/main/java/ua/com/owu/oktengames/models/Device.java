@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString(exclude = {"extraGames", "gamepads"})
+@ToString(exclude = {"gamepads"})
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +34,10 @@ public class Device {
     private ConditionState conditionState;
     @ElementCollection
     private List<String> photosImgUrl = new ArrayList<>();
-    @JsonIgnore
-    @OneToMany(mappedBy = "device", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<Game> extraGames = new ArrayList<>();
+    // АЛО БЛЯТЬ!!!! Я думаю нам цей список вже нахуй не всрався, бо я зробив клас Platform
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "device", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    private List<Game> extraGames = new ArrayList<>();
     @JsonIgnore
     @OneToMany(mappedBy = "device", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Gamepad> gamepads = new ArrayList<>();
