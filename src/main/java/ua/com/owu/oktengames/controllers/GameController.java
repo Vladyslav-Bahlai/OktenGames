@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.com.owu.oktengames.models.Game;
 import ua.com.owu.oktengames.models.GameAddon;
+import ua.com.owu.oktengames.models.Genre;
 import ua.com.owu.oktengames.models.Platform;
 import ua.com.owu.oktengames.servicesImpl.GameAddonService;
 import ua.com.owu.oktengames.servicesImpl.GameService;
+import ua.com.owu.oktengames.servicesImpl.GenreService;
 import ua.com.owu.oktengames.servicesImpl.PlatformService;
 
 import java.util.Arrays;
@@ -22,14 +24,18 @@ public class GameController {
     private GameService gameService;
     private GameAddonService gameAddonService;
     private PlatformService platformService;
+    private GenreService genreService;
 
     @PostMapping("/add")
     public Game addGame(@RequestBody Game game){
-        System.out.println(game.toString());
         gameService.saveGame(game);
         for (Platform platform : game.getPlatforms()) {
             platform.getGames().add(game);
             platformService.addPlatform(platform);
+        }
+        for (Genre genre : game.getGenres()) {
+            genre.getGames().add(game);
+            genreService.addGenre(genre);
         }
         return game;
     }
@@ -76,6 +82,11 @@ public class GameController {
     @GetMapping("/platforms")
     public List<Platform> getAllPlatforms() {
         return platformService.getAllPlatforms();
+    }
+
+    @GetMapping("/genres")
+    public List<Genre> getAllGenres() {
+        return genreService.getAllGenres();
     }
 
 }

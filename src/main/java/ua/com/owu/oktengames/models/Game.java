@@ -28,8 +28,8 @@ public class Game {
     private String company;
     @ElementCollection
     private List<String> screenShotsImgUrl = new ArrayList<>();
-    @ElementCollection
-    private List<String> genres = new ArrayList<>();
+    @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
+    private List<Genre> genres = new LinkedList<>();
     @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
     private List<Platform> platforms = new LinkedList<>();
     @OneToMany(mappedBy = "mainGame", cascade = CascadeType.ALL)
