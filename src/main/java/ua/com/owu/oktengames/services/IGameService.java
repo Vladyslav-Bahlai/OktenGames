@@ -9,5 +9,4 @@ public interface IGameService {
     List<Game> getAllGames();
     Game getGameById(int id);
     boolean deleteGameById(int id);
-
 }

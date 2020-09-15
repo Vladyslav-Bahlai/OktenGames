@@ -1,5 +1,6 @@
 package ua.com.owu.oktengames.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class Game {
     private int amount;
     private double price;
     private double score;
-    private String imgUrl;
+    private String titleImgUrl;
     private String description;
     // TODO: probably replace String type with some special Date or Time Java classes
     private String releaseDate;
@@ -32,8 +33,7 @@ public class Game {
     private List<Genre> genres = new LinkedList<>();
     @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
     private List<Platform> platforms = new LinkedList<>();
+    @JsonManagedReference
     @OneToMany(mappedBy = "mainGame", cascade = CascadeType.ALL)
     private List<GameAddon> additionalContent = new ArrayList<>();
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Device device;
 }
