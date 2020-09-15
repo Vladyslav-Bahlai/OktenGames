@@ -1,5 +1,6 @@
 package ua.com.owu.oktengames.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,14 +14,12 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
-public class Gamepad {
+public class ConditionState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String title;
-    private double price;
-    private int amount;
-    @ManyToMany(mappedBy = "gamepads", cascade = CascadeType.ALL)
-    private List<Color> color = new ArrayList<>();
+    private String name;
+    @OneToMany(mappedBy = "conditionStates", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Device> devices = new ArrayList<>();
 }
