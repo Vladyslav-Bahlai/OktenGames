@@ -2,6 +2,7 @@ package ua.com.owu.oktengames.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.com.owu.oktengames.models.Game;
 import ua.com.owu.oktengames.models.GameAddon;
 import ua.com.owu.oktengames.models.Genre;
@@ -27,7 +28,9 @@ public class GameController {
     private GenreService genreService;
 
     @PostMapping("/add")
-    public Game addGame(@RequestBody Game game){
+    public Game addGame(
+            @RequestBody Game game
+    ){
         gameService.saveGame(game);
         for (Platform platform : game.getPlatforms()) {
             platform.getGames().add(game);
@@ -36,6 +39,10 @@ public class GameController {
         for (Genre genre : game.getGenres()) {
             genre.getGames().add(game);
             genreService.addGenre(genre);
+        }
+        for (GameAddon gameAddon : game.getAdditionalContent()) {
+            gameAddon.setMainGame(game);
+            gameAddonService.saveGameAddon(gameAddon);
         }
         return game;
     }
