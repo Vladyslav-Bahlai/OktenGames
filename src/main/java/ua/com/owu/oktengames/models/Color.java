@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,5 +21,6 @@ public class Color {
     private int id;
     private String name;
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Gamepad> gamepads = new ArrayList<>();
+    @JsonIgnore
+    private List<Gamepad> gamepads = new LinkedList<>();
 }

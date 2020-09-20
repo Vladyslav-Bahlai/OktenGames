@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.owu.oktengames.models.Color;
 import ua.com.owu.oktengames.models.ConditionState;
 import ua.com.owu.oktengames.models.Gamepad;
+import ua.com.owu.oktengames.models.Platform;
 import ua.com.owu.oktengames.servicesImpl.ColorService;
 import ua.com.owu.oktengames.servicesImpl.GamepadService;
 
@@ -20,9 +21,14 @@ public class GamepadController {
     private ColorService colorService;
 
     @PostMapping("/add-gamepad")
-    public void addGamepad(@RequestBody Gamepad gamepad) {
+    public Gamepad addGamepad(@RequestBody Gamepad gamepad) {
         System.out.println(gamepad.toString());
         gamepadService.addGamepad(gamepad);
+        for (Color color : colorService.getAllColors()) {
+            color.getGamepads().add(gamepad);
+            colorService.addColor(color);
+        }
+        return gamepad;
     }
 
     @GetMapping("/all-gamepads")
