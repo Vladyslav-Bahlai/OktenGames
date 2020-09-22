@@ -1,6 +1,8 @@
 package ua.com.owu.oktengames.controllers;
 
+import jdk.nashorn.internal.parser.JSONParser;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.com.owu.oktengames.models.Game;
@@ -27,11 +29,17 @@ public class GameController {
     private PlatformService platformService;
     private GenreService genreService;
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = { "multipart/form-data" })
     public Game addGame(
-            @RequestBody Game game
+            @RequestPart Game game,
+            @RequestPart MultipartFile[] files
     ){
+        for (MultipartFile file : files) {
+            game.getScreenShotsImgUrl().add(file.getOriginalFilename());
+        }
+
         gameService.saveGame(game);
+
         for (Platform platform : game.getPlatforms()) {
             platform.getGames().add(game);
             platformService.addPlatform(platform);
@@ -44,6 +52,7 @@ public class GameController {
             gameAddon.setMainGame(game);
             gameAddonService.saveGameAddon(gameAddon);
         }
+
         return game;
     }
 
