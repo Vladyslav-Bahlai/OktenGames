@@ -14,6 +14,8 @@ import ua.com.owu.oktengames.servicesImpl.GameService;
 import ua.com.owu.oktengames.servicesImpl.GenreService;
 import ua.com.owu.oktengames.servicesImpl.PlatformService;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +38,14 @@ public class GameController {
     ){
         for (MultipartFile file : files) {
             game.getScreenShotsImgUrl().add(file.getOriginalFilename());
+            String path = "D:" + File.separator + "dev" + File.separator +
+                    "OktenGamesProject" + File.separator + "pics" + File.separator +
+                    file.getOriginalFilename();
+            try {
+                file.transferTo(new File(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         gameService.saveGame(game);
