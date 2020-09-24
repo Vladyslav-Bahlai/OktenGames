@@ -1,8 +1,6 @@
 package ua.com.owu.oktengames.controllers;
 
-import jdk.nashorn.internal.parser.JSONParser;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.com.owu.oktengames.models.Game;
