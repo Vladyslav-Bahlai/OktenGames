@@ -14,12 +14,13 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString(exclude = {"devices"})
 public class ConditionState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @OneToMany(mappedBy = "conditionStates", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Device> devices = new ArrayList<>();
 }

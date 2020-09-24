@@ -6,8 +6,7 @@ import ua.com.owu.oktengames.models.ConditionState;
 import ua.com.owu.oktengames.models.Device;
 import ua.com.owu.oktengames.servicesImpl.ConditionStateService;
 import ua.com.owu.oktengames.servicesImpl.DeviceService;
-import ua.com.owu.oktengames.servicesImpl.GameService;
-import ua.com.owu.oktengames.servicesImpl.GamepadService;
+
 
 import java.util.List;
 
@@ -20,9 +19,14 @@ public class DeviceController {
     private ConditionStateService conditionStateService;
 
     @PostMapping("/add-device")
-    public void addDevice(@RequestBody Device device){
+    public Device addDevice(@RequestBody Device device){
         System.out.println(device.toString());
         deviceService.addDevice(device);
+        for (ConditionState conditionState : conditionStateService.getAllConditionStates()) {
+            conditionState.getDevices().add(device);
+            conditionStateService.addConditionState(conditionState);
+        }
+        return device;
     }
 
     @GetMapping("/all-devices")

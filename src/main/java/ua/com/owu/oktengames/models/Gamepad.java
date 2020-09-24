@@ -21,6 +21,6 @@ public class Gamepad {
     private String title;
     private double price;
     private int amount;
-    @ManyToMany(mappedBy = "gamepads", cascade = CascadeType.ALL)
-    private List<Color> color = new ArrayList<>();
+    @ManyToMany(mappedBy = "gamepads", fetch = FetchType.LAZY)
+    private List<Color> colors = new LinkedList<>();
 }

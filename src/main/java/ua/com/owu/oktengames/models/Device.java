@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -24,8 +25,8 @@ public class Device {
     private int gamepads;
 //    @Enumerated(value = EnumType.STRING)
 //    private Platform platform;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ConditionState conditionStates;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<ConditionState> conditionStates = new LinkedList<>();
     @ElementCollection
     private List<String> photosImgUrl = new ArrayList<>();
     // АЛО БЛЯТЬ!!!! Я думаю нам цей список вже нахуй не всрався, бо я зробив клас Platform

@@ -2,7 +2,6 @@ package ua.com.owu.oktengames.servicesImpl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.com.owu.oktengames.models.Color;
 import ua.com.owu.oktengames.models.ConditionState;
 import ua.com.owu.oktengames.repo.ConditionStateRepo;
 import ua.com.owu.oktengames.services.IConditionStateService;
