@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class GameAddon extends Game {
+public class GameAddon extends GameBase {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Game mainGame;

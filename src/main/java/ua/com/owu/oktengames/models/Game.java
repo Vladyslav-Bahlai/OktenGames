@@ -7,28 +7,13 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
-public class Game {
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private int id;
-    private String title;
-    private int amount;
-    private double price;
-    private double score;
-    private String titleImgUrl;
-    private String description;
-    // TODO: probably replace String type with some special Date or Time Java classes
-    private String releaseDate;
-    private String company;
-    @ElementCollection
-    private List<String> screenShotsImgUrl = new ArrayList<>();
+public class Game extends GameBase {
     @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
     private List<Genre> genres = new LinkedList<>();
     @ManyToMany(mappedBy = "games", fetch = FetchType.LAZY)
