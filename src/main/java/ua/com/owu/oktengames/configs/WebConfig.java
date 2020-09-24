@@ -1,18 +1,22 @@
 package ua.com.owu.oktengames.configs;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    private static final String path = "file:///D:" + File.separator +
+            "dev" + File.separator +
+            "OktenGamesProject" + File.separator +
+            "pics" + File.separator;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String path = "file:///D:" + File.separator + "dev" + File.separator +
-                "OktenGamesProject" + File.separator + "pics" + File.separator;
         registry.addResourceHandler("/screenShots/**")
                 .addResourceLocations(path);
     }
