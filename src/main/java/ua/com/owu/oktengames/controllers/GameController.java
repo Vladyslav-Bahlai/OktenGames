@@ -3,6 +3,7 @@ package ua.com.owu.oktengames.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ua.com.owu.oktengames.components.FileManager;
 import ua.com.owu.oktengames.models.Game;
 import ua.com.owu.oktengames.models.GameAddon;
 import ua.com.owu.oktengames.models.Genre;
@@ -12,7 +13,6 @@ import ua.com.owu.oktengames.servicesImpl.GameService;
 import ua.com.owu.oktengames.servicesImpl.GenreService;
 import ua.com.owu.oktengames.servicesImpl.PlatformService;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -28,24 +28,19 @@ public class GameController {
     private GameAddonService gameAddonService;
     private PlatformService platformService;
     private GenreService genreService;
+    private FileManager<Game> gameFileManager;
 
     @PostMapping(value = "/add", consumes = { "multipart/form-data" })
     public Game addGame(
             @RequestPart Game game,
-            @RequestPart MultipartFile[] files
+            @RequestPart MultipartFile[] gameFiles
+//            @RequestPart MultipartFile[] addonsFiles
     ){
-        for (MultipartFile file : files) {
-            game.getScreenShotsImgUrl().add(file.getOriginalFilename());
-            String path = "D:" + File.separator + "dev" + File.separator +
-                    "OktenGamesProject" + File.separator + "pics" + File.separator +
-                    file.getOriginalFilename();
-            try {
-                file.transferTo(new File(path));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            gameFileManager.saveImagesToDatabase(gameFiles, game);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
         gameService.saveGame(game);
 
         for (Platform platform : game.getPlatforms()) {

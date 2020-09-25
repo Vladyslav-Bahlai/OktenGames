@@ -1,29 +1,29 @@
 package ua.com.owu.oktengames.configs;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import ua.com.owu.oktengames.components.FileManager;
+import ua.com.owu.oktengames.models.Product;
 
-import java.io.File;
 
 @Configuration
+@NoArgsConstructor
+@AllArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private static final String path = "file:///D:" + File.separator +
-            "dev" + File.separator +
-            "OktenGamesProject" + File.separator +
-            "pics" + File.separator;
+    private FileManager<Product> productFileManager;
 
+    /***
+     * This method handles all the requests to static files
+     * and redirects them to actual file system
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/screenShots/**")
-                .addResourceLocations(path);
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/screenShots/**")
-                .allowedOrigins("http://localhost:4200", "http://localhost:8080");
+                .addResourceLocations(productFileManager.getFilesFolderPath());
     }
 }
