@@ -22,10 +22,11 @@ public class DeviceController {
     public Device addDevice(@RequestBody Device device){
         System.out.println(device.toString());
         deviceService.addDevice(device);
-        for (ConditionState conditionState : conditionStateService.getAllConditionStates()) {
+        for (ConditionState conditionState : device.getConditionStates()) {
             conditionState.getDevices().add(device);
             conditionStateService.addConditionState(conditionState);
         }
+
         return device;
     }
 
@@ -42,5 +43,4 @@ public class DeviceController {
     public List<ConditionState> getAllConditionStates(ConditionState conditionState){
         return conditionStateService.getAllConditionStates();
     }
-
 }

@@ -24,7 +24,7 @@ public class GamepadController {
     public Gamepad addGamepad(@RequestBody Gamepad gamepad) {
         System.out.println(gamepad.toString());
         gamepadService.addGamepad(gamepad);
-        for (Color color : colorService.getAllColors()) {
+        for (Color color : gamepad.getColors()) {
             color.getGamepads().add(gamepad);
             colorService.addColor(color);
         }
